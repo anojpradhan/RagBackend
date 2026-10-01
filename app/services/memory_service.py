@@ -33,6 +33,7 @@ class MemoryService:
             key,
             json.dumps(message),
         )
+        self.client.expire(key, 60 * 60 * 24)
 
     def get_messages(
         self,
