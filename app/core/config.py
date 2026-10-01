@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
 
     database_url: str
+    redis_url: str = "redis://localhost:6379/0"
     google_api_key: str
     model_config = SettingsConfigDict(
         env_file=".env",
