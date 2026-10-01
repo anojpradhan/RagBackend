@@ -9,6 +9,8 @@ class Settings(BaseSettings):
 
     database_url: str
     redis_url: str = "redis://localhost:6379/0"
+    gemini_primary_model: str = "gemini-3.8-flash"
+    gemini_fallback_model: str = "gemini-3.5-flash"
     google_api_key: str
     model_config = SettingsConfigDict(
         env_file=".env",
