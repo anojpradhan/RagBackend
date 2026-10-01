@@ -1,13 +1,18 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = ("Palm Mind AI-Task",)
-    app_version: str = "1.0.0"
-    debug: bool = True
+    qdrant_url: str = "http://localhost:6333"
+    qdrant_collection: str = "documents"
 
-    class Config:
-        env_file = ".env"
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+
+    database_url: str
+    google_api_key: str
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore",
+    )
 
 
 settings = Settings()
