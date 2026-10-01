@@ -1,5 +1,6 @@
 from app.db.base import Base
 from app.db.database import engine
+from app.models.booking import Booking
 
 
 async def init_db() -> None:
