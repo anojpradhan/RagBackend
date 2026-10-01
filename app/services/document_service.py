@@ -18,7 +18,7 @@ class DocumentService:
 
         raise ValueError("Unspported file type")
 
-    async def chunk_text(self, text: str, strategy: str) -> list[str]:
+    def chunk_text(self, text: str, strategy: str) -> list[str]:
         chunker = get_chunker(strategy)
         return chunker.chunk(text)
 
