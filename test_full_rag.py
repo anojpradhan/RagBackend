@@ -14,7 +14,7 @@ rag_service = RAGService(
 )
 
 
-question = "What does Palm Mind AI use PostgreSQL for?"
+question = "What does PostgreSQL store?"
 
 answer = rag_service.answer(
     question=question,
