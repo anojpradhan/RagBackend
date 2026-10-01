@@ -43,6 +43,7 @@ class VectorService:
         self,
         chunks: list[str],
         embeddings: list[list[float]],
+        document_id: str,
         filename: str,
     ) -> None:
 
@@ -54,6 +55,7 @@ class VectorService:
                     id=str(uuid4()),
                     vector=embedding,
                     payload={
+                        "document_id": document_id,
                         "filename": filename,
                         "chunk_index": index,
                         "text": chunk,
