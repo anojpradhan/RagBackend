@@ -23,3 +23,18 @@ class RAGService:
             query_embedding=query_embedding,
             limit=limit,
         )
+
+    def build_context(
+        self,
+        results,
+    ) -> str:
+
+        context_parts = []
+
+        for result in results:
+            text = result.payload.get("text")
+
+            if text:
+                context_parts.append(text)
+
+        return "\n\n".join(context_parts)
