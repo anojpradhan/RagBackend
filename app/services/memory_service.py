@@ -1,3 +1,5 @@
+import json
+
 import redis
 
 from app.core.config import settings
@@ -22,20 +24,36 @@ class MemoryService:
 
         key = f"chat:{session_id}"
 
+        message = {
+            "role": role,
+            "content": content,
+        }
+
         self.client.rpush(
             key,
-            f"{role}:{content}",
+            json.dumps(message),
         )
 
     def get_messages(
         self,
         session_id: str,
-    ) -> list[str]:
+    ) -> list[dict[str, str]]:
 
         key = f"chat:{session_id}"
 
-        return self.client.lrange(
+        messages = self.client.lrange(
             key,
             0,
             -1,
         )
+
+        return [json.loads(message) for message in messages]
+
+    def clear_session(
+        self,
+        session_id: str,
+    ) -> None:
+
+        key = f"chat:{session_id}"
+
+        self.client.delete(key)

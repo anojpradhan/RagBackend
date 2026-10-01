@@ -4,6 +4,8 @@ memory_service = MemoryService()
 
 session_id = "test-session-001"
 
+memory_service.clear_session(session_id)
+
 memory_service.add_message(
     session_id=session_id,
     role="user",
