@@ -3,6 +3,8 @@ from pathlib import Path
 import fitz
 from fastapi import UploadFile
 
+from app.chunker.factory import get_chunker
+
 
 class DocumentService:
     async def extract_text(self, file: UploadFile) -> str:
@@ -15,6 +17,10 @@ class DocumentService:
             return await self._extract_pdf(file)
 
         raise ValueError("Unspported file type")
+
+    async def chunk_text(self, text: str, strategy: str) -> list[str]:
+        chunker = get_chunker(strategy)
+        return chunker.chunk(text)
 
     async def _extract_txt(self, file: UploadFile) -> str:
         content = await file.read()
