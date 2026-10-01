@@ -1,4 +1,5 @@
 from app.llm.gemini import GeminiLLM
+from app.services.booking_service import BookingService
 from app.services.embedding_service import EmbeddingService
 from app.services.memory_service import MemoryService
 from app.services.rag_service import RAGService
@@ -8,10 +9,13 @@ embedding_service = EmbeddingService()
 vector_service = VectorService()
 llm = GeminiLLM()
 memory_service = MemoryService()
+booking_service = BookingService()
+
 
 rag_service = RAGService(
     embedding_service=embedding_service,
     vector_service=vector_service,
     llm=llm,
     memory_service=memory_service,
+    booking_service=booking_service,
 )

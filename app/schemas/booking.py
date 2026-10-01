@@ -21,3 +21,11 @@ class BookingResponse(BaseModel):
     model_config = {
         "from_attributes": True,
     }
+
+
+class BookingExtraction(BaseModel):
+    booking_requested: bool = False
+    name: str | None = None
+    email: EmailStr | None = None
+    interview_date: date | None = None
+    interview_time: time | None = None

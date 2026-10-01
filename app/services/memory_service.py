@@ -21,7 +21,6 @@ class MemoryService:
         role: str,
         content: str,
     ) -> None:
-
         key = f"chat:{session_id}"
 
         message = {
@@ -33,13 +32,16 @@ class MemoryService:
             key,
             json.dumps(message),
         )
-        self.client.expire(key, 60 * 60 * 24)
+
+        self.client.expire(
+            key,
+            60 * 60 * 24,
+        )
 
     def get_messages(
         self,
         session_id: str,
     ) -> list[dict[str, str]]:
-
         key = f"chat:{session_id}"
 
         messages = self.client.lrange(
@@ -54,7 +56,38 @@ class MemoryService:
         self,
         session_id: str,
     ) -> None:
+        self.client.delete(f"chat:{session_id}")
 
-        key = f"chat:{session_id}"
+        self.clear_booking_data(session_id)
 
-        self.client.delete(key)
+    def set_booking_data(
+        self,
+        session_id: str,
+        data: dict,
+    ) -> None:
+        key = f"booking:{session_id}"
+
+        self.client.set(
+            key,
+            json.dumps(data),
+            ex=60 * 60 * 24,
+        )
+
+    def get_booking_data(
+        self,
+        session_id: str,
+    ) -> dict:
+        key = f"booking:{session_id}"
+
+        data = self.client.get(key)
+
+        if not data:
+            return {}
+
+        return json.loads(data)
+
+    def clear_booking_data(
+        self,
+        session_id: str,
+    ) -> None:
+        self.client.delete(f"booking:{session_id}")

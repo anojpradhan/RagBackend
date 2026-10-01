@@ -13,6 +13,7 @@ class BookingService:
         db: AsyncSession,
         booking_data: BookingCreate,
     ) -> BookingResponse:
+
         booking = await self.repository.create(
             db,
             booking_data,
